@@ -1,15 +1,9 @@
 /* =========================================================
-   GRAD-004 — THE FINAL THESIS
-   FIXED TYPOGRAPHY VERSION
-
-   غيّر بيانات الزبون من هنا فقط.
+   GRAD-004 — FINAL THESIS
+   DATA
 ========================================================= */
 
 const GRADUATION = {
-
-  /* =========================
-     الخريج
-  ========================= */
 
   graduateName:
     "أحمد محمد",
@@ -29,41 +23,23 @@ const GRADUATION = {
   classYear:
     "دفعة ٢٠٢٧",
 
-  honors:
-    "",
-
-
-  /* =========================
-     الرسالة
-  ========================= */
-
   thesisCode:
     "TH-2027-04",
 
   chapterQuote:
-    "لم تكن السنوات مجرد وقت مضى، بل كانت الطريق الذي صنع هذه اللحظة.",
+    "لم تكن السنوات مجرد وقت مضى بل كانت الطريق الذي صنع هذه اللحظة",
 
   tagline:
-    "اليوم نغلق صفحة الدراسة، ونفتح صفحة جديدة تستحق أن نحتفل بها معكم.",
+    "اليوم نغلق صفحة الدراسة ونفتح صفحة جديدة تستحق أن نحتفل بها معكم",
 
   invitationText:
-    "نتشرف بدعوتكم لمشاركتنا فرحة التخرج والاحتفال بختام هذه الرحلة الأكاديمية.",
-
-
-  /* =========================
-     المضيف
-  ========================= */
+    "نتشرف بدعوتكم لمشاركتنا فرحة التخرج والاحتفال بختام هذه الرحلة الأكاديمية",
 
   hostType:
     "graduate",
 
   hostName:
     "أحمد محمد",
-
-
-  /* =========================
-     التاريخ
-  ========================= */
 
   startAt:
     "2027-07-15T18:00:00+03:00",
@@ -73,11 +49,6 @@ const GRADUATION = {
 
   timeZone:
     "Asia/Baghdad",
-
-
-  /* =========================
-     المكان
-  ========================= */
 
   venue:
     "القاعة الكبرى للاحتفالات",
@@ -91,15 +62,7 @@ const GRADUATION = {
   country:
     "العراق",
 
-
-  /* =========================
-     الروابط
-  ========================= */
-
   mapsUrl:
-    "",
-
-  universityUrl:
     "",
 
   shareUrl:
@@ -144,7 +107,7 @@ const reducedMotion =
 
 
 /* =========================================================
-   INITIALIZE
+   INIT
 ========================================================= */
 
 document.addEventListener(
@@ -355,13 +318,17 @@ function setupDate() {
   document.getElementById(
     "formattedDate"
   ).textContent =
-    dateFormatter.format(date);
+    dateFormatter.format(
+      date
+    );
 
 
   document.getElementById(
     "formattedTime"
   ).textContent =
-    timeFormatter.format(date);
+    timeFormatter.format(
+      date
+    );
 
 
   document.getElementById(
@@ -414,7 +381,9 @@ function getMapsUrl() {
 
   return (
     "https://www.google.com/maps/search/?api=1&query=" +
-    encodeURIComponent(query)
+    encodeURIComponent(
+      query
+    )
   );
 
 }
@@ -650,7 +619,7 @@ async function shareInvitation() {
 
 
       showShareFeedback(
-        "تمت مشاركة الدعوة بنجاح."
+        "تمت مشاركة الدعوة بنجاح"
       );
 
 
@@ -670,7 +639,7 @@ async function shareInvitation() {
 
 
       showShareFeedback(
-        "تم نسخ رابط الدعوة."
+        "تم نسخ رابط الدعوة"
       );
 
 
@@ -685,7 +654,7 @@ async function shareInvitation() {
 
 
     showShareFeedback(
-      "تم نسخ رابط الدعوة."
+      "تم نسخ رابط الدعوة"
     );
 
   } catch (error) {
@@ -708,13 +677,13 @@ async function shareInvitation() {
 
 
       showShareFeedback(
-        "تم نسخ رابط الدعوة."
+        "تم نسخ رابط الدعوة"
       );
 
     } catch {
 
       showShareFeedback(
-        "يمكنك نسخ رابط الدعوة من المتصفح."
+        "يمكنك نسخ الرابط من المتصفح"
       );
 
     }
@@ -795,13 +764,13 @@ function showShareFeedback(
     message;
 
 
-  window.clearTimeout(
+  clearTimeout(
     showShareFeedback.timer
   );
 
 
   showShareFeedback.timer =
-    window.setTimeout(
+    setTimeout(
       () => {
 
         shareFeedback.textContent =
@@ -816,8 +785,7 @@ function showShareFeedback(
 
 /* =========================================================
    ANIMATIONS
-   مهم:
-   لا يوجد clip-path على النص العربي.
+   SAFE FOR ARABIC
 ========================================================= */
 
 function setupAnimations() {
@@ -827,8 +795,6 @@ function setupAnimations() {
     typeof gsap ===
       "undefined"
   ) {
-
-    showEverythingImmediately();
 
     return;
 
@@ -847,38 +813,23 @@ function setupAnimations() {
   }
 
 
-  /* COVER */
+  /*
+    IMPORTANT:
+    We animate the whole title container,
+    NOT individual Arabic lines.
+    This prevents glyph collisions.
+  */
+
 
   gsap.from(
-    ".cover-copy .title-line",
+    ".cover-copy",
     {
-
-      y: 28,
 
       opacity: 0,
-
-      duration: 0.75,
-
-      stagger: 0.12,
-
-      ease:
-        "power3.out"
-
-    }
-  );
-
-
-  gsap.from(
-    ".cover-copy p",
-    {
 
       y: 18,
 
-      opacity: 0,
-
-      duration: 0.7,
-
-      delay: 0.25,
+      duration: 0.8,
 
       ease:
         "power2.out"
@@ -887,73 +838,21 @@ function setupAnimations() {
   );
 
 
-  /* CHAPTER TITLES */
-
   gsap.utils
     .toArray(
-      ".reveal-title"
+      ".chapter-content"
     )
     .forEach(
-      title => {
-
-        const lines =
-          title.querySelectorAll(
-            ".title-line"
-          );
-
+      section => {
 
         gsap.from(
-          lines,
+          section,
           {
-
-            y: 30,
 
             opacity: 0,
-
-            duration: 0.7,
-
-            stagger: 0.12,
-
-            ease:
-              "power3.out",
-
-            scrollTrigger: {
-
-              trigger:
-                title,
-
-              start:
-                "top 84%",
-
-              once:
-                true
-
-            }
-
-          }
-        );
-
-      }
-    );
-
-
-  /* BODY CONTENT */
-
-  gsap.utils
-    .toArray(
-      ".chapter-lead, .chapter-note, .editorial-quote"
-    )
-    .forEach(
-      element => {
-
-        gsap.from(
-          element,
-          {
 
             y: 24,
 
-            opacity: 0,
-
             duration: 0.7,
 
             ease:
@@ -962,10 +861,10 @@ function setupAnimations() {
             scrollTrigger: {
 
               trigger:
-                element,
+                section,
 
               start:
-                "top 90%",
+                "top 85%",
 
               once:
                 true
@@ -978,100 +877,19 @@ function setupAnimations() {
       }
     );
 
-
-  /* ACHIEVEMENT ROWS */
-
-  gsap.utils
-    .toArray(
-      ".achievement-row"
-    )
-    .forEach(
-      row => {
-
-        gsap.from(
-          row,
-          {
-
-            y: 20,
-
-            opacity: 0,
-
-            duration: 0.55,
-
-            ease:
-              "power2.out",
-
-            scrollTrigger: {
-
-              trigger:
-                row,
-
-              start:
-                "top 92%",
-
-              once:
-                true
-
-            }
-
-          }
-        );
-
-      }
-    );
-
-
-  /* FINAL CHAPTER LINE */
-
-  gsap.fromTo(
-    ".final-chapter__line",
-
-    {
-      scaleX: 0
-    },
-
-    {
-
-      scaleX: 1,
-
-      duration: 1,
-
-      ease:
-        "power2.out",
-
-      scrollTrigger: {
-
-        trigger:
-          ".final-chapter",
-
-        start:
-          "top 68%",
-
-        once:
-          true
-
-      }
-
-    }
-  );
-
-
-  /* FINAL TITLE */
 
   gsap.from(
-    ".final-title .title-line",
+    ".final-title",
     {
-
-      y: 35,
 
       opacity: 0,
 
+      y: 25,
+
       duration: 0.75,
 
-      stagger: 0.14,
-
       ease:
-        "power3.out",
+        "power2.out",
 
       scrollTrigger: {
 
@@ -1090,52 +908,15 @@ function setupAnimations() {
   );
 
 
-  /* NEXT CHAPTER */
-
   gsap.from(
-    "#nextChapterTitle .title-line",
+    ".next-content",
     {
-
-      y: 32,
 
       opacity: 0,
 
+      y: 24,
+
       duration: 0.75,
-
-      stagger: 0.14,
-
-      ease:
-        "power3.out",
-
-      scrollTrigger: {
-
-        trigger:
-          "#nextChapterTitle",
-
-        start:
-          "top 82%",
-
-        once:
-          true
-
-      }
-
-    }
-  );
-
-
-  /* NEXT CHAPTER RULE */
-
-  gsap.from(
-    ".next-chapter__rule",
-    {
-
-      scaleX: 0,
-
-      transformOrigin:
-        "right center",
-
-      duration: 0.9,
 
       ease:
         "power2.out",
@@ -1143,10 +924,10 @@ function setupAnimations() {
       scrollTrigger: {
 
         trigger:
-          ".next-chapter__rule",
+          ".next-content",
 
         start:
-          "top 90%",
+          "top 84%",
 
         once:
           true
@@ -1157,22 +938,18 @@ function setupAnimations() {
   );
 
 
-  /* INVITATION TITLE */
-
   gsap.from(
-    ".invitation-heading .title-line",
+    ".invitation-heading",
     {
-
-      y: 28,
 
       opacity: 0,
 
+      y: 24,
+
       duration: 0.7,
 
-      stagger: 0.12,
-
       ease:
-        "power3.out",
+        "power2.out",
 
       scrollTrigger: {
 
@@ -1180,7 +957,7 @@ function setupAnimations() {
           ".invitation-heading",
 
         start:
-          "top 83%",
+          "top 85%",
 
         once:
           true
@@ -1191,17 +968,15 @@ function setupAnimations() {
   );
 
 
-  /* INVITATION DOCUMENT */
-
   gsap.from(
     ".invitation-document",
     {
 
-      y: 40,
-
       opacity: 0,
 
-      duration: 0.8,
+      y: 28,
+
+      duration: 0.75,
 
       ease:
         "power2.out",
@@ -1212,7 +987,7 @@ function setupAnimations() {
           ".invitation-document",
 
         start:
-          "top 86%",
+          "top 87%",
 
         once:
           true
@@ -1223,19 +998,15 @@ function setupAnimations() {
   );
 
 
-  /* ACTION TITLE */
-
   gsap.from(
-    ".actions-heading .title-line",
+    ".actions-heading",
     {
-
-      y: 25,
 
       opacity: 0,
 
-      duration: 0.7,
+      y: 20,
 
-      stagger: 0.12,
+      duration: 0.7,
 
       ease:
         "power2.out",
@@ -1246,7 +1017,7 @@ function setupAnimations() {
           ".actions-heading",
 
         start:
-          "top 86%",
+          "top 88%",
 
         once:
           true
@@ -1256,8 +1027,6 @@ function setupAnimations() {
     }
   );
 
-
-  /* ACTION CARDS */
 
   gsap.utils
     .toArray(
@@ -1270,9 +1039,9 @@ function setupAnimations() {
           card,
           {
 
-            y: 20,
-
             opacity: 0,
+
+            y: 18,
 
             duration: 0.55,
 
@@ -1297,75 +1066,5 @@ function setupAnimations() {
 
       }
     );
-
-
-  /* CLOSING */
-
-  gsap.from(
-    ".closing .title-line",
-    {
-
-      y: 28,
-
-      opacity: 0,
-
-      duration: 0.7,
-
-      stagger: 0.12,
-
-      ease:
-        "power3.out",
-
-      scrollTrigger: {
-
-        trigger:
-          ".closing",
-
-        start:
-          "top 72%",
-
-        once:
-          true
-
-      }
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-function showEverythingImmediately() {
-
-  const animated =
-    document.querySelectorAll(
-      [
-        ".title-line",
-        ".chapter-lead",
-        ".chapter-note",
-        ".editorial-quote",
-        ".achievement-row",
-        ".invitation-document",
-        ".action-card"
-      ].join(",")
-    );
-
-
-  animated.forEach(
-    element => {
-
-      element.style.opacity =
-        "1";
-
-
-      element.style.transform =
-        "none";
-
-    }
-  );
 
 }
