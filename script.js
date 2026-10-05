@@ -1,7 +1,8 @@
 /* =========================================================
    GRAD-004 — THE FINAL THESIS
+   FIXED TYPOGRAPHY VERSION
 
-   غيّر بيانات الزبون من هذا القسم فقط.
+   غيّر بيانات الزبون من هنا فقط.
 ========================================================= */
 
 const GRADUATION = {
@@ -170,7 +171,7 @@ function initialize() {
 
 
 /* =========================================================
-   DYNAMIC DATA
+   DATA
 ========================================================= */
 
 function applyData() {
@@ -377,7 +378,7 @@ function setupDate() {
 
 
 /* =========================================================
-   GOOGLE MAPS
+   MAPS
 ========================================================= */
 
 function setupMaps() {
@@ -523,11 +524,15 @@ END:VCALENDAR`;
 
 
   const url =
-    URL.createObjectURL(blob);
+    URL.createObjectURL(
+      blob
+    );
 
 
   const anchor =
-    document.createElement("a");
+    document.createElement(
+      "a"
+    );
 
 
   anchor.href =
@@ -633,7 +638,9 @@ async function shareInvitation() {
 
   try {
 
-    if (navigator.share) {
+    if (
+      navigator.share
+    ) {
 
       await navigator.share({
         title,
@@ -672,7 +679,9 @@ async function shareInvitation() {
     }
 
 
-    fallbackCopy(url);
+    fallbackCopy(
+      url
+    );
 
 
     showShareFeedback(
@@ -693,7 +702,9 @@ async function shareInvitation() {
 
     try {
 
-      fallbackCopy(url);
+      fallbackCopy(
+        url
+      );
 
 
       showShareFeedback(
@@ -804,7 +815,9 @@ function showShareFeedback(
 
 
 /* =========================================================
-   GSAP / SCROLLTRIGGER
+   ANIMATIONS
+   مهم:
+   لا يوجد clip-path على النص العربي.
 ========================================================= */
 
 function setupAnimations() {
@@ -834,17 +847,23 @@ function setupAnimations() {
   }
 
 
-  /* =========================
-     COVER
-  ========================= */
+  /* COVER */
 
   gsap.from(
-    ".cover-copy h1",
+    ".cover-copy .title-line",
     {
-      y: 40,
+
+      y: 28,
+
       opacity: 0,
-      duration: 1,
-      ease: "power3.out"
+
+      duration: 0.75,
+
+      stagger: 0.12,
+
+      ease:
+        "power3.out"
+
     }
   );
 
@@ -852,18 +871,23 @@ function setupAnimations() {
   gsap.from(
     ".cover-copy p",
     {
-      y: 20,
+
+      y: 18,
+
       opacity: 0,
-      duration: 0.8,
+
+      duration: 0.7,
+
       delay: 0.25,
-      ease: "power2.out"
+
+      ease:
+        "power2.out"
+
     }
   );
 
 
-  /* =========================
-     CHAPTER TITLES
-  ========================= */
+  /* CHAPTER TITLES */
 
   gsap.utils
     .toArray(
@@ -872,21 +896,23 @@ function setupAnimations() {
     .forEach(
       title => {
 
-        const children =
-          Array.from(
-            title.children
+        const lines =
+          title.querySelectorAll(
+            ".title-line"
           );
 
 
         gsap.from(
-          title,
+          lines,
           {
 
-            yPercent: 20,
+            y: 30,
 
             opacity: 0,
 
-            duration: 0.85,
+            duration: 0.7,
+
+            stagger: 0.12,
 
             ease:
               "power3.out",
@@ -897,7 +923,7 @@ function setupAnimations() {
                 title,
 
               start:
-                "top 82%",
+                "top 84%",
 
               once:
                 true
@@ -907,50 +933,11 @@ function setupAnimations() {
           }
         );
 
-
-        if (
-          children.length
-        ) {
-
-          gsap.from(
-            children,
-            {
-
-              clipPath:
-                "inset(0 0 100% 0)",
-
-              y: 18,
-
-              duration: 0.9,
-
-              ease:
-                "power3.out",
-
-              scrollTrigger: {
-
-                trigger:
-                  title,
-
-                start:
-                  "top 82%",
-
-                once:
-                  true
-
-              }
-
-            }
-          );
-
-        }
-
       }
     );
 
 
-  /* =========================
-     PARAGRAPHS
-  ========================= */
+  /* BODY CONTENT */
 
   gsap.utils
     .toArray(
@@ -963,60 +950,19 @@ function setupAnimations() {
           element,
           {
 
-            y: 28,
+            y: 24,
 
             opacity: 0,
 
-            duration: 0.75,
+            duration: 0.7,
+
+            ease:
+              "power2.out",
 
             scrollTrigger: {
 
               trigger:
                 element,
-
-              start:
-                "top 88%",
-
-              once:
-                true
-
-            }
-
-          }
-        );
-
-      }
-    );
-
-
-  /* =========================
-     ACHIEVEMENT ROWS
-  ========================= */
-
-  gsap.utils
-    .toArray(
-      ".achievement-row"
-    )
-    .forEach(
-      (row, index) => {
-
-        gsap.from(
-          row,
-          {
-
-            x: 25,
-
-            opacity: 0,
-
-            duration: 0.55,
-
-            delay:
-              index * 0.04,
-
-            scrollTrigger: {
-
-              trigger:
-                row,
 
               start:
                 "top 90%",
@@ -1033,19 +979,65 @@ function setupAnimations() {
     );
 
 
-  /* =========================
-     FINAL CHAPTER
-  ========================= */
+  /* ACHIEVEMENT ROWS */
+
+  gsap.utils
+    .toArray(
+      ".achievement-row"
+    )
+    .forEach(
+      row => {
+
+        gsap.from(
+          row,
+          {
+
+            y: 20,
+
+            opacity: 0,
+
+            duration: 0.55,
+
+            ease:
+              "power2.out",
+
+            scrollTrigger: {
+
+              trigger:
+                row,
+
+              start:
+                "top 92%",
+
+              once:
+                true
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+
+  /* FINAL CHAPTER LINE */
 
   gsap.fromTo(
     ".final-chapter__line",
+
     {
       scaleX: 0
     },
+
     {
+
       scaleX: 1,
-      duration: 1.2,
-      ease: "power2.out",
+
+      duration: 1,
+
+      ease:
+        "power2.out",
 
       scrollTrigger: {
 
@@ -1053,25 +1045,30 @@ function setupAnimations() {
           ".final-chapter",
 
         start:
-          "top 65%",
+          "top 68%",
 
         once:
           true
 
       }
+
     }
   );
 
 
+  /* FINAL TITLE */
+
   gsap.from(
-    ".final-title",
+    ".final-title .title-line",
     {
 
-      yPercent: 18,
+      y: 35,
 
       opacity: 0,
 
-      duration: 1,
+      duration: 0.75,
+
+      stagger: 0.14,
 
       ease:
         "power3.out",
@@ -1093,20 +1090,19 @@ function setupAnimations() {
   );
 
 
-  /* =========================
-     NEXT CHAPTER
-  ========================= */
+  /* NEXT CHAPTER */
 
   gsap.from(
-    "#nextChapterTitle",
+    "#nextChapterTitle .title-line",
     {
 
-      clipPath:
-        "inset(0 0 100% 0)",
+      y: 32,
 
-      y: 30,
+      opacity: 0,
 
-      duration: 1.1,
+      duration: 0.75,
+
+      stagger: 0.14,
 
       ease:
         "power3.out",
@@ -1115,68 +1111,6 @@ function setupAnimations() {
 
         trigger:
           "#nextChapterTitle",
-
-        start:
-          "top 80%",
-
-        once:
-          true
-
-      }
-
-    }
-  );
-
-
-  gsap.from(
-    ".next-chapter__rule",
-    {
-
-      scaleX: 0,
-
-      transformOrigin:
-        "right center",
-
-      duration: 1,
-
-      scrollTrigger: {
-
-        trigger:
-          ".next-chapter__rule",
-
-        start:
-          "top 88%",
-
-        once:
-          true
-
-      }
-
-    }
-  );
-
-
-  /* =========================
-     INVITATION DOCUMENT
-  ========================= */
-
-  gsap.from(
-    ".invitation-document",
-    {
-
-      y: 50,
-
-      opacity: 0,
-
-      duration: 0.9,
-
-      ease:
-        "power2.out",
-
-      scrollTrigger: {
-
-        trigger:
-          ".invitation-document",
 
         start:
           "top 82%",
@@ -1190,9 +1124,140 @@ function setupAnimations() {
   );
 
 
-  /* =========================
-     ACTIONS
-  ========================= */
+  /* NEXT CHAPTER RULE */
+
+  gsap.from(
+    ".next-chapter__rule",
+    {
+
+      scaleX: 0,
+
+      transformOrigin:
+        "right center",
+
+      duration: 0.9,
+
+      ease:
+        "power2.out",
+
+      scrollTrigger: {
+
+        trigger:
+          ".next-chapter__rule",
+
+        start:
+          "top 90%",
+
+        once:
+          true
+
+      }
+
+    }
+  );
+
+
+  /* INVITATION TITLE */
+
+  gsap.from(
+    ".invitation-heading .title-line",
+    {
+
+      y: 28,
+
+      opacity: 0,
+
+      duration: 0.7,
+
+      stagger: 0.12,
+
+      ease:
+        "power3.out",
+
+      scrollTrigger: {
+
+        trigger:
+          ".invitation-heading",
+
+        start:
+          "top 83%",
+
+        once:
+          true
+
+      }
+
+    }
+  );
+
+
+  /* INVITATION DOCUMENT */
+
+  gsap.from(
+    ".invitation-document",
+    {
+
+      y: 40,
+
+      opacity: 0,
+
+      duration: 0.8,
+
+      ease:
+        "power2.out",
+
+      scrollTrigger: {
+
+        trigger:
+          ".invitation-document",
+
+        start:
+          "top 86%",
+
+        once:
+          true
+
+      }
+
+    }
+  );
+
+
+  /* ACTION TITLE */
+
+  gsap.from(
+    ".actions-heading .title-line",
+    {
+
+      y: 25,
+
+      opacity: 0,
+
+      duration: 0.7,
+
+      stagger: 0.12,
+
+      ease:
+        "power2.out",
+
+      scrollTrigger: {
+
+        trigger:
+          ".actions-heading",
+
+        start:
+          "top 86%",
+
+        once:
+          true
+
+      }
+
+    }
+  );
+
+
+  /* ACTION CARDS */
 
   gsap.utils
     .toArray(
@@ -1209,7 +1274,10 @@ function setupAnimations() {
 
             opacity: 0,
 
-            duration: 0.6,
+            duration: 0.55,
+
+            ease:
+              "power2.out",
 
             scrollTrigger: {
 
@@ -1217,7 +1285,7 @@ function setupAnimations() {
                 card,
 
               start:
-                "top 92%",
+                "top 94%",
 
               once:
                 true
@@ -1230,11 +1298,45 @@ function setupAnimations() {
       }
     );
 
+
+  /* CLOSING */
+
+  gsap.from(
+    ".closing .title-line",
+    {
+
+      y: 28,
+
+      opacity: 0,
+
+      duration: 0.7,
+
+      stagger: 0.12,
+
+      ease:
+        "power3.out",
+
+      scrollTrigger: {
+
+        trigger:
+          ".closing",
+
+        start:
+          "top 72%",
+
+        once:
+          true
+
+      }
+
+    }
+  );
+
 }
 
 
 /* =========================================================
-   REDUCED MOTION FALLBACK
+   REDUCED MOTION
 ========================================================= */
 
 function showEverythingImmediately() {
@@ -1242,15 +1344,11 @@ function showEverythingImmediately() {
   const animated =
     document.querySelectorAll(
       [
-        ".cover-copy h1",
-        ".cover-copy p",
-        ".reveal-title",
+        ".title-line",
         ".chapter-lead",
         ".chapter-note",
         ".editorial-quote",
         ".achievement-row",
-        ".final-title",
-        "#nextChapterTitle",
         ".invitation-document",
         ".action-card"
       ].join(",")
@@ -1265,10 +1363,6 @@ function showEverythingImmediately() {
 
 
       element.style.transform =
-        "none";
-
-
-      element.style.clipPath =
         "none";
 
     }
